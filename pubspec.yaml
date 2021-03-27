@@ -1,7 +1,7 @@
 name: ej_stepper
 description: Stepper with a brand new design.
 version: 0.0.1
-homepage:
+homepage: https://github.com/EhsnJmli/ej_stepper.git
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
