@@ -1,6 +1,6 @@
 name: ej_stepper
 description: Stepper with a brand new design. Easy to use with similar properties to material stepper.
-version: 0.0.2
+version: 0.0.2+1
 homepage: https://github.com/EhsnJmli/ej_stepper.git
 
 environment:
