@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({Key? key, required this.title}) : super(key: key);
   final String title;
 
   @override
@@ -27,8 +27,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String firstName;
-  String lastName;
+  String? firstName;
+  String? lastName;
 
   int currentStep = 0;
 
@@ -50,25 +50,25 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: [
                   Icon(
                     firstName != null &&
-                            firstName.isNotEmpty &&
+                            firstName!.isNotEmpty &&
                             lastName != null &&
-                            lastName.isNotEmpty
+                            lastName!.isNotEmpty
                         ? Icons.check_circle_outline
                         : Icons.close,
                     size: 100,
                     color: firstName != null &&
-                            firstName.isNotEmpty &&
+                            firstName!.isNotEmpty &&
                             lastName != null &&
-                            lastName.isNotEmpty
+                            lastName!.isNotEmpty
                         ? Colors.green
                         : Colors.red,
                   ),
                   SizedBox(height: 8),
                   Text(
                     firstName != null &&
-                            firstName.isNotEmpty &&
+                            firstName!.isNotEmpty &&
                             lastName != null &&
-                            lastName.isNotEmpty
+                            lastName!.isNotEmpty
                         ? 'Done'
                         : 'Fill all fields',
                     style: textTheme.headline5,
@@ -84,19 +84,19 @@ class _MyHomePageState extends State<MyHomePage> {
               'First Name',
               style: textTheme.bodyText1,
             ),
-            subtitle: firstName != null && firstName.isNotEmpty
+            subtitle: firstName != null && firstName!.isNotEmpty
                 ? Text(
-                    firstName,
-                    style: textTheme.subtitle2.copyWith(color: Colors.grey),
+                    firstName!,
+                    style: textTheme.subtitle2?.copyWith(color: Colors.grey),
                   )
                 : null,
             leftWidget: Icon(
               Icons.person,
               size: 30,
             ),
-            state: firstName != null && firstName.isNotEmpty
+            state: firstName != null && firstName!.isNotEmpty
                 ? EJStepState.complete
-                : EJStepState.active,
+                : EJStepState.enable,
             content: TextField(
               onChanged: (value) {
                 setState(() {
@@ -110,19 +110,19 @@ class _MyHomePageState extends State<MyHomePage> {
                 'Last Name',
                 style: textTheme.bodyText1,
               ),
-              subtitle: lastName != null && lastName.isNotEmpty
+              subtitle: lastName != null && lastName!.isNotEmpty
                   ? Text(
-                      lastName,
-                      style: textTheme.subtitle2.copyWith(color: Colors.grey),
+                      lastName ?? '',
+                      style: textTheme.subtitle2?.copyWith(color: Colors.grey),
                     )
                   : null,
               leftWidget: Icon(
                 Icons.perm_contact_calendar_rounded,
                 size: 30,
               ),
-              state: lastName != null && lastName.isNotEmpty
+              state: lastName != null && lastName!.isNotEmpty
                   ? EJStepState.complete
-                  : EJStepState.active,
+                  : EJStepState.enable,
               content: TextField(
                 onChanged: (value) {
                   setState(() {

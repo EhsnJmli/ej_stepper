@@ -5,7 +5,7 @@ const EdgeInsets _stepsMargin =
 
 enum EJStepState {
   /// A step that is active and can be entered.
-  active,
+  enable,
 
   /// A step that is completed.
   complete,
@@ -22,43 +22,42 @@ class EJStep {
   const EJStep({
     this.title,
     this.subtitle,
-    @required this.content,
-    this.state = EJStepState.active,
+    required this.content,
+    this.state = EJStepState.enable,
     this.stepEnteredLeftWidget,
     this.leftWidget,
-  })  : assert(state != null),
-        assert(content != null);
+  });
 
   /// The title of the step that typically describes it.
-  final Widget title;
+  final Widget? title;
 
   /// The subtitle of the step that appears below the title and has a smaller
   /// font size. It typically gives more details that complement the title.
   ///
   /// If null, the subtitle is not shown.
-  final Widget subtitle;
+  final Widget? subtitle;
 
   /// The content of the step that appears below the [title] and [subtitle].
   final Widget content;
 
   /// The state of the step which determines the styling of its components.
   ///
-  /// defaults to [EJStepState.active].
+  /// defaults to [EJStepState.enable].
   final EJStepState state;
 
   /// The Widget which appears next to the [content] and below
   /// the [title] and [subtitle] when step is entered.
-  final Widget stepEnteredLeftWidget;
+  final Widget? stepEnteredLeftWidget;
 
   /// The Widget which appears next to the [title] and [subtitle]
   /// when step is not entered.
-  final Widget leftWidget;
+  final Widget? leftWidget;
 }
 
 class EJStepper extends StatefulWidget {
   const EJStepper({
-    Key key,
-    @required this.steps,
+    Key? key,
+    required this.steps,
     this.scrollPhysics,
     this.onStepTapped,
     this.onStepNext,
@@ -73,8 +72,7 @@ class EJStepper extends StatefulWidget {
     this.leadingErrorColor,
     this.leadingCompleteColor,
     this.stepsMargin = _stepsMargin,
-  })  : assert(steps != null),
-        assert(currentStep == null ||
+  })  : assert(currentStep == null ||
             (0 <= currentStep && currentStep < steps.length)),
         super(key: key);
 
@@ -90,35 +88,35 @@ class EJStepper extends StatefulWidget {
   ///
   /// If the stepper is contained within another scrollable it
   /// can be helpful to set this property to [ClampingScrollPhysics].
-  final ScrollPhysics scrollPhysics;
+  final ScrollPhysics? scrollPhysics;
 
   /// The callback called when a step is tapped, with its index passed as
   /// an argument.
   ///
   /// Automatically it will change step to tapped step if state of step is not
   /// [EJStepState.disable].
-  final ValueChanged<int> onStepTapped;
+  final ValueChanged<int>? onStepTapped;
 
   /// The callback called when the 'next' button is tapped, with current step index
   /// passed as an argument.
   ///
   /// If null, the steps keeps changing and step change isn't related to
   /// this function.
-  final ValueChanged<int> onStepNext;
+  final ValueChanged<int>? onStepNext;
 
   /// The callback called when the 'confirm' button is tapped.
   /// 'confirm' button only displayed in last step instead of 'next' button.
-  final VoidCallback onLastStepConfirmTap;
+  final VoidCallback? onLastStepConfirmTap;
 
   /// The callback called when the 'back' button is tapped, with current step index
   /// passed as an argument.
   ///
   /// If null, the steps keeps changing and step changing isn't related to
   /// this function.
-  final ValueChanged<int> onStepBack;
+  final ValueChanged<int>? onStepBack;
 
   /// The index into [steps] of the current step whose content is displayed.
-  final int currentStep;
+  final int? currentStep;
 
   /// The callback for creating custom back button.
   ///
@@ -129,7 +127,7 @@ class EJStepper extends StatefulWidget {
   /// It can be used to control the stepper.
   /// For example, keeping track of the [currentStep] within the callback can
   /// change the text of the back button depending on which step users are at.
-  final Widget Function(VoidCallback onBackPressed, Widget child, int index)
+  final Widget Function(VoidCallback onBackPressed, Widget child, int index)?
       backButtonBuilder;
 
   /// The callback for creating custom next button.
@@ -141,25 +139,25 @@ class EJStepper extends StatefulWidget {
   /// It can be used to control the stepper.
   /// For example, keeping track of the [currentStep] within the callback can
   /// change the text of the next button depending on which step users are at.
-  final Widget Function(VoidCallback onNextPressed, Widget child, int index)
+  final Widget Function(VoidCallback onNextPressed, Widget child, int index)?
       nextButtonBuilder;
 
-  /// Color of leading when step's state is [EJStepState.active] and stepper is
+  /// Color of leading when step's state is [EJStepState.enable] and stepper is
   /// in this step.
-  final Color leadingActiveColor;
+  final Color? leadingActiveColor;
 
-  /// Color of leading when step's state is [EJStepState.active] and stepper is not
+  /// Color of leading when step's state is [EJStepState.enable] and stepper is not
   /// in this step.
-  final Color leadingInActiveColor;
+  final Color? leadingInActiveColor;
 
   /// Color of leading when step's state is [EJStepState.disable].
-  final Color leadingDisableColor;
+  final Color? leadingDisableColor;
 
   /// Color of leading when step's state is [EJStepState.error].
-  final Color leadingErrorColor;
+  final Color? leadingErrorColor;
 
   /// Color of leading when step's state is [EJStepState.complete].
-  final Color leadingCompleteColor;
+  final Color? leadingCompleteColor;
 
   /// Margin of each step.
   ///
@@ -177,7 +175,7 @@ class _EJStepperState extends State<EJStepper> {
   void didUpdateWidget(covariant EJStepper oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.currentStep != null) {
-      _currentStep = widget.currentStep;
+      _currentStep = widget.currentStep!;
     }
   }
 
@@ -185,13 +183,13 @@ class _EJStepperState extends State<EJStepper> {
   void initState() {
     super.initState();
     if (widget.currentStep != null) {
-      _currentStep = widget.currentStep;
+      _currentStep = widget.currentStep!;
     }
   }
 
   Color leadingColor(int index) {
     switch (widget.steps[index].state) {
-      case EJStepState.active:
+      case EJStepState.enable:
         return index == _currentStep
             ? widget.leadingActiveColor ?? Colors.blue
             : widget.leadingInActiveColor ?? Colors.blue;
@@ -218,7 +216,7 @@ class _EJStepperState extends State<EJStepper> {
     if (widget.steps[index - 1].state != EJStepState.disable) {
       _changeStep(index - 1);
       if (widget.onStepBack != null) {
-        widget.onStepBack(index);
+        widget.onStepBack!(index);
       }
     }
   }
@@ -227,13 +225,13 @@ class _EJStepperState extends State<EJStepper> {
     FocusScope.of(context).requestFocus(FocusNode());
     if (index == widget.steps.length - 1) {
       if (widget.onLastStepConfirmTap != null) {
-        widget.onLastStepConfirmTap();
+        widget.onLastStepConfirmTap!();
       }
     } else {
       if (widget.steps[index + 1].state != EJStepState.disable) {
         _changeStep(index + 1);
         if (widget.onStepNext != null) {
-          widget.onStepNext(index);
+          widget.onStepNext!(index);
         }
       }
     }
@@ -264,11 +262,11 @@ class _EJStepperState extends State<EJStepper> {
             }
           }
           if (widget.onStepTapped != null) {
-            widget.onStepTapped(index);
+            widget.onStepTapped!(index);
           }
         },
         child: Container(
-          margin: widget.stepsMargin ?? _stepsMargin,
+          margin: widget.stepsMargin,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
             color: Colors.white,
@@ -379,15 +377,15 @@ class _EJStepperState extends State<EJStepper> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           if (widget.steps[index].title != null)
-            widget.steps[index].title
+            widget.steps[index].title!
           else
             SizedBox(),
           if (widget.steps[index].subtitle != null)
-            widget.steps[index].subtitle,
+            widget.steps[index].subtitle!,
         ],
       );
 
-  Widget _buildLeftChild(int index) => _isCurrent(index)
+  Widget? _buildLeftChild(int index) => _isCurrent(index)
       ? widget.steps[index].stepEnteredLeftWidget
       : widget.steps[index].leftWidget;
 
@@ -406,13 +404,14 @@ class _EJStepperState extends State<EJStepper> {
             ? MaterialLocalizations.of(context).okButtonLabel
             : MaterialLocalizations.of(context).continueButtonLabel,
         textAlign: TextAlign.center,
-        style:
-            Theme.of(context).textTheme.bodyText2.copyWith(color: Colors.white),
+        style: Theme.of(context)
+            .textTheme
+            .bodyText2!
+            .copyWith(color: Colors.white),
       ),
     );
     return widget.nextButtonBuilder != null
-        ? (widget.nextButtonBuilder(() => _onNext(index), child, index) ??
-            child)
+        ? widget.nextButtonBuilder!(() => _onNext(index), child, index)
         : GestureDetector(onTap: () => _onNext(index), child: child);
   }
 
@@ -429,13 +428,14 @@ class _EJStepperState extends State<EJStepper> {
       child: Text(
         MaterialLocalizations.of(context).backButtonTooltip,
         textAlign: TextAlign.center,
-        style:
-            Theme.of(context).textTheme.bodyText2.copyWith(color: Colors.white),
+        style: Theme.of(context)
+            .textTheme
+            .bodyText2!
+            .copyWith(color: Colors.white),
       ),
     );
     return widget.backButtonBuilder != null
-        ? (widget.backButtonBuilder(() => _onBack(index), child, index) ??
-            child)
+        ? widget.backButtonBuilder!(() => _onBack(index), child, index)
         : GestureDetector(onTap: () => _onBack(index), child: child);
   }
 }
