@@ -406,7 +406,7 @@ class _EJStepperState extends State<EJStepper> {
         textAlign: TextAlign.center,
         style: Theme.of(context)
             .textTheme
-            .bodyText2!
+            .bodyMedium!
             .copyWith(color: Colors.white),
       ),
     );
@@ -430,7 +430,7 @@ class _EJStepperState extends State<EJStepper> {
         textAlign: TextAlign.center,
         style: Theme.of(context)
             .textTheme
-            .bodyText2!
+            .bodyMedium!
             .copyWith(color: Colors.white),
       ),
     );

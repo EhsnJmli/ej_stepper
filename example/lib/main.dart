@@ -71,7 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             lastName!.isNotEmpty
                         ? 'Done'
                         : 'Fill all fields',
-                    style: textTheme.headline5,
+                    style: textTheme.headlineSmall,
                   ),
                 ],
               ),
@@ -82,12 +82,12 @@ class _MyHomePageState extends State<MyHomePage> {
           EJStep(
             title: Text(
               'First Name',
-              style: textTheme.bodyText1,
+              style: textTheme.bodyLarge,
             ),
             subtitle: firstName != null && firstName!.isNotEmpty
                 ? Text(
                     firstName!,
-                    style: textTheme.subtitle2?.copyWith(color: Colors.grey),
+                    style: textTheme.titleSmall?.copyWith(color: Colors.grey),
                   )
                 : null,
             leftWidget: Icon(
@@ -108,12 +108,12 @@ class _MyHomePageState extends State<MyHomePage> {
           EJStep(
               title: Text(
                 'Last Name',
-                style: textTheme.bodyText1,
+                style: textTheme.bodyLarge,
               ),
               subtitle: lastName != null && lastName!.isNotEmpty
                   ? Text(
                       lastName ?? '',
-                      style: textTheme.subtitle2?.copyWith(color: Colors.grey),
+                      style: textTheme.titleSmall?.copyWith(color: Colors.grey),
                     )
                   : null,
               leftWidget: Icon(
